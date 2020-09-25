@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
+      <p>text placeholder...</p>
     </div>
   );
 }
