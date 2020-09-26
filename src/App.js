@@ -124,7 +124,16 @@ function App() {
         <p>Generation: {numGens}</p>
       </div>
       <div style={{ display: 'flex' }}>
-        <h2>Text Placeholder...</h2>
+        <div style={{ flexDirection: 'column' }}>
+          <h2>Game Rules</h2>
+          <ol>
+            <li>Each cell is either alive or dead.</li>
+            <li>Any live cell with fewer than two or greater than three live neighbors dies.</li>
+            <li>Any live cell with two or three live neighbors survives to the next generation.</li>
+            <li>Any dead cell with three live neighbors becomes a live cell in the next generation.</li>
+          </ol>
+        </div>
+
         <div className='board'
           style={{
             display: 'grid',
