@@ -20,6 +20,15 @@ function App() {
     return rows;
   }
 
+  function drawRandomGrid() {
+    const rows = [];
+    for (let i = 0; i < numRows; i++ ) {
+      rows.push(Array.from(Array(numCols), () => (Math.random() > 0.75 ? 1 : 0)));
+    }
+    setGrid(rows);
+    setNumGens(1);
+  }
+
   const handleCellClick = (i, j) => {
     if (!running) {
       const newGrid = produce(grid, draftGrid => {
@@ -98,6 +107,7 @@ function App() {
             setNumGens(1);
           }}>Clear
         </button>
+        <button onClick={drawRandomGrid}>Random</button>
         <p>Generation: {numGens}</p>
       </div>
       <div style={{ display: 'flex' }}>
