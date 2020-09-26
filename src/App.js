@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 import { ACHIMS_P144, ANVIL } from './presets';
+import styled from 'styled-components';
 import './App.css';
 
 function App() {
@@ -111,34 +112,38 @@ function App() {
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
-      <div className='controls'>
-        <button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
-        <button onClick={() => {
-            setGrid(drawEmptyGrid());
-            setNumGens(1);
-          }}>Clear
-        </button>
-        <button onClick={drawRandomGrid}>Random</button>
-        <button onClick={drawPreset1}>Achim's P144</button>
-        <button onClick={drawPreset2}>Anvil</button>
-        <p>Generation: {numGens}</p>
-      </div>
+      <Controls>
+        <Generation>Generation: {numGens}</Generation>
+        <Run>
+          <button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
+          <button onClick={() => {
+              setGrid(drawEmptyGrid());
+              setNumGens(1);
+            }}>Clear
+          </button>
+        </Run>
+        <Patterns>
+          <button onClick={drawRandomGrid}>Random</button>
+          <button onClick={drawPreset1}>Achim's P144</button>
+          <button onClick={drawPreset2}>Anvil</button>
+        </Patterns>
+      </Controls>
       <div style={{ display: 'flex' }}>
         <div style={{ flexDirection: 'column' }}>
           <h2>Game Rules</h2>
-          <ol>
-            <li>Each cell is either alive or dead.</li>
-            <li>Any live cell with fewer than two or greater than three live neighbors dies.</li>
-            <li>Any live cell with two or three live neighbors survives to the next generation.</li>
-            <li>Any dead cell with three live neighbors becomes a live cell in the next generation.</li>
-          </ol>
+          <ul style={{ textAlign: 'left' }}>
+            <Li>Each cell is either alive or dead.</Li>
+            <Li>Any live cell with fewer than two or greater than three live neighbors dies.</Li>
+            <Li>Any live cell with two or three live neighbors survives to the next generation.</Li>
+            <Li>Any dead cell with three live neighbors becomes a live cell in the next generation.</Li>
+          </ul>
         </div>
-
         <div className='board'
           style={{
             display: 'grid',
             gridTemplateColumns: `repeat(${numCols}, 20px)`,
-            gridTemplateRows: `repeat(${numRows}, 20px)`
+            gridTemplateRows: `repeat(${numRows}, 20px)`,
+            marginRight: '10%'
           }}
         >
           {grid.map((rows, i) =>
@@ -157,8 +162,44 @@ function App() {
           )}
         </div>
       </div>
-      <p>text placeholder...</p>
+      {/* <p>text placeholder...</p> */}
     </div>
   )
 }
 export default App;
+
+const Li = styled.li`
+  margin: 1.2em;
+`
+const Controls = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 1%;
+  // border: 1px solid red;
+  padding-left: 10%;
+`
+
+const Run = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width: 20%;
+  // background: yellow;
+  // border: 1px dashed green;
+`
+
+const Patterns = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width: 40%;
+  // background: pink;
+  // border: 1px solid purple;
+`
+
+const Generation = styled.div`
+  font-size: 18px;
+`
