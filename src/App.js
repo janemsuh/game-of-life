@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import produce from 'immer';
 import './App.css';
 
 function App() {
@@ -16,6 +17,20 @@ function App() {
     }
     return rows;
   }
+
+  const handleCellClick = (i, j) => {
+    if (!running) {
+      const newGrid = produce(grid, draftGrid => {
+        if (grid[i][j] === 0) {
+          draftGrid[i][j] = 1;
+        }
+        else {
+          draftGrid[i][j] = 0;
+        }
+      });
+      setGrid(newGrid);
+    }
+  };
 
   const toggleRunning = () => {
     setRunning(!running);
@@ -46,11 +61,12 @@ function App() {
           {grid.map((rows, i) =>
             rows.map((cell, j) => (
               <div
+                onClick={() => handleCellClick(i, j)}
                 key={`cell @[${i},${j}]`}
                 style={{
                   width: 18,
                   height: 18,
-                  background: '#abe0f9',
+                  background: grid[i][j] > 0 ? '#009cde' : '#abe0f9',
                   border: '1px solid white'
                 }}
               />
