@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
+import { ACHIMS_P144, ANVIL } from './presets';
 import './App.css';
 
 function App() {
-  const numRows = 30;
+  const numRows = 25;
   const numCols = 50;
   const [grid, setGrid] = useState(drawEmptyGrid());
   const [running, setRunning] = useState(false);
@@ -22,10 +23,20 @@ function App() {
 
   function drawRandomGrid() {
     const rows = [];
-    for (let i = 0; i < numRows; i++ ) {
+    for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.75 ? 1 : 0)));
     }
     setGrid(rows);
+    setNumGens(1);
+  }
+
+  function drawPreset1() {
+    setGrid(ACHIMS_P144);
+    setNumGens(1);
+  }
+
+  function drawPreset2() {
+    setGrid(ANVIL);
     setNumGens(1);
   }
 
@@ -108,6 +119,8 @@ function App() {
           }}>Clear
         </button>
         <button onClick={drawRandomGrid}>Random</button>
+        <button onClick={drawPreset1}>Achim's P144</button>
+        <button onClick={drawPreset2}>Anvil</button>
         <p>Generation: {numGens}</p>
       </div>
       <div style={{ display: 'flex' }}>
@@ -116,9 +129,7 @@ function App() {
           style={{
             display: 'grid',
             gridTemplateColumns: `repeat(${numCols}, 20px)`,
-            gridTemplateRows: `repeat(${numRows}, 20px)`,
-            // background: 'grey',
-            // border: '3px dashed purple',
+            gridTemplateRows: `repeat(${numRows}, 20px)`
           }}
         >
           {grid.map((rows, i) =>
