@@ -11,7 +11,7 @@ function App() {
   const [running, setRunning] = useState(false);
   const runningRef = useRef();
   runningRef.current = running;
-  const timeInterval = 50;
+  const timeInterval = 250;
   const [numGens, setNumGens] = useState(1); 
 
   function drawEmptyGrid() {
@@ -113,20 +113,19 @@ function App() {
     <div className="App">
       <h1>Conway's Game of Life</h1>
       <Controls>
-        <Generation>Generation: {numGens}</Generation>
+        <Patterns>
+          <Button onClick={drawPreset1}>Achim's P144</Button>
+          <Button onClick={drawPreset2}>Anvil</Button>
+          <Button onClick={drawRandomGrid}>Random</Button>
+        </Patterns>
         <Run>
-          <button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
-          <button onClick={() => {
+          <ButtonR onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</ButtonR>
+          <ButtonR onClick={() => {
               setGrid(drawEmptyGrid());
               setNumGens(1);
             }}>Clear
-          </button>
+          </ButtonR>
         </Run>
-        <Patterns>
-          <button onClick={drawRandomGrid}>Random</button>
-          <button onClick={drawPreset1}>Achim's P144</button>
-          <button onClick={drawPreset2}>Anvil</button>
-        </Patterns>
       </Controls>
       <div style={{ display: 'flex' }}>
         <div style={{ flexDirection: 'column' }}>
@@ -137,6 +136,8 @@ function App() {
             <Li>Any live cell with two or three live neighbors survives to the next generation.</Li>
             <Li>Any dead cell with three live neighbors becomes a live cell in the next generation.</Li>
           </ul>
+          <h2>Generation</h2>
+          <p>{numGens}</p>
         </div>
         <div className='board'
           style={{
@@ -154,6 +155,7 @@ function App() {
                 style={{
                   width: 18,
                   height: 18,
+                  borderRadius: '50%',
                   background: grid[i][j] > 0 ? '#009cde' : '#abe0f9',
                   border: '1px solid white'
                 }}
@@ -162,7 +164,6 @@ function App() {
           )}
         </div>
       </div>
-      {/* <p>text placeholder...</p> */}
     </div>
   )
 }
@@ -178,28 +179,44 @@ const Controls = styled.div`
   margin-left: 25%;
   margin-right: 25%;
   margin-bottom: 1%;
-  // border: 1px solid red;
   padding-left: 10%;
-`
-
-const Run = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  width: 20%;
-  // background: yellow;
-  // border: 1px dashed green;
+  padding-right: 10%;
 `
 
 const Patterns = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
-  width: 40%;
-  // background: pink;
-  // border: 1px solid purple;
+  width: 55%;
 `
 
-const Generation = styled.div`
-  font-size: 18px;
+const Button = styled.button`
+  background: #009cde;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 3%;
+  &:hover {
+    background: #abe0f9;
+    color: #009cde;
+  }
+`
+
+const ButtonR = styled.button`
+  background: #009cde;
+  border: none;
+  color: white;
+  font-size: 14px;
+  width: 50px;
+  &:hover {
+    background: #abe0f9;
+    color: #009cde;
+  }
+`
+
+const Run = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width: 28%;
 `
